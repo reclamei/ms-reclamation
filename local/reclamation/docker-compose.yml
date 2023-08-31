@@ -1,0 +1,23 @@
+services:
+    reclamation.mysql:
+        container_name: reclamation.mysql
+        hostname: localhost
+        image: mysql:8.0.30
+        command: --max_allowed_packet=512M
+        volumes:
+            - db:/var/lib/mysql
+            - ./mysql:/docker-entrypoint-initdb.d/
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: reclamation_db
+        networks:
+            - bubble
+        ports:
+            - '3306:3306'
+
+networks:
+    bubble:
+        external: true
+
+volumes:
+    db:
