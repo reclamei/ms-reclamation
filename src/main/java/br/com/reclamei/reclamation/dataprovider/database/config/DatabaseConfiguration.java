@@ -1,4 +1,4 @@
-package br.com.reclamei.company.dataprovider.database.config;
+package br.com.reclamei.reclamation.dataprovider.database.config;
 
 import liquibase.integration.spring.SpringLiquibase;
 import lombok.extern.slf4j.Slf4j;

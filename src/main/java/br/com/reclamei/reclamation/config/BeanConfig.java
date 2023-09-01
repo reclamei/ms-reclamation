@@ -1,4 +1,4 @@
-package br.com.reclamei.company.config;
+package br.com.reclamei.reclamation.config;
 
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;

@@ -1,4 +1,4 @@
-package br.com.reclamei.company.dataprovider.database.entity;
+package br.com.reclamei.reclamation.dataprovider.database.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

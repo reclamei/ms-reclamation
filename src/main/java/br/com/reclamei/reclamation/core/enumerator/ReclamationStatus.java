@@ -1,4 +1,4 @@
-package br.com.reclamei.company.core.enumerator;
+package br.com.reclamei.reclamation.core.enumerator;
 
 public enum ReclamationStatus {
     OPEN,

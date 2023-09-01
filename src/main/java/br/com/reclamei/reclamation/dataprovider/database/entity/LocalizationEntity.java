@@ -1,4 +1,4 @@
-package br.com.reclamei.company.dataprovider.database.entity;
+package br.com.reclamei.reclamation.dataprovider.database.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,6 +21,9 @@ public class LocalizationEntity implements Serializable {
 
     @Id
     private Long id;
+
+    @Column(name = "location_id", nullable = false)
+    private Long locationId;
 
     @Column(name = "street")
     private String street;

@@ -1,6 +1,6 @@
-package br.com.reclamei.company.dataprovider.database.entity;
+package br.com.reclamei.reclamation.dataprovider.database.entity;
 
-import br.com.reclamei.company.core.enumerator.ReclamationStatus;
+import br.com.reclamei.reclamation.core.enumerator.ReclamationStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,6 +32,12 @@ public class ReclamationEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "citizen_id", nullable = false)
+    private Long citizenId;
+
+    @Column(name = "service_subtype_id", nullable = false)
+    private Long serviceSubtypeId;
+
     @Column(name = "description", nullable = false)
     private String description;
 
@@ -50,10 +56,10 @@ public class ReclamationEntity implements Serializable {
     @Column(name = "status", nullable = false)
     private ReclamationStatus status;
 
-    @OneToOne(mappedBy = "reclamation", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "reclamation", cascade = CascadeType.ALL, orphanRemoval = true)
     private LocalizationEntity localization;
 
-    @OneToMany(mappedBy = "reclamation", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "reclamation", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ResponseEntity> responses;
 
 }
