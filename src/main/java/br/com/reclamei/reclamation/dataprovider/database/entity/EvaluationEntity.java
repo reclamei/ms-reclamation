@@ -12,13 +12,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "evaluation")
-public class EvaluationEntity {
+public class EvaluationEntity implements Serializable {
 
     @Id
     private Long id;

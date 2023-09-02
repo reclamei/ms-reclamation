@@ -9,7 +9,7 @@ import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = { LocalizationDatabaseMapper.class })
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = LocalizationDatabaseMapper.class)
 public interface ReclamationDatabaseMapper {
 
     ReclamationDomain toDomain(ReclamationEntity entity);

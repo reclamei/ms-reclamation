@@ -65,7 +65,7 @@ public class ReclamationController implements ReclamationsApi {
 
     @Override
     @PatchMapping("/{id}/update-status")
-    public ResponseEntity<Void> updateStatus(final Long id, final String status) {
+    public ResponseEntity<Void> updateStatus(@PathVariable final Long id, final String status) {
         facade.updateStatus(id, status);
         return ResponseEntity.status(NO_CONTENT).build();
     }
