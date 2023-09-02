@@ -1,6 +1,6 @@
 package br.com.reclamei.reclamation.dataprovider.database.entity;
 
-import br.com.reclamei.reclamation.core.enumerator.ReclamationStatus;
+import br.com.reclamei.reclamation.core.enumerator.ReclamationStatusEnum;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -54,12 +54,12 @@ public class ReclamationEntity implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private ReclamationStatus status;
+    private ReclamationStatusEnum status;
 
     @OneToOne(mappedBy = "reclamation", cascade = CascadeType.ALL, orphanRemoval = true)
     private LocalizationEntity localization;
 
-    @OneToMany(mappedBy = "reclamation", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "reclamation", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<ResponseEntity> responses;
 
 }

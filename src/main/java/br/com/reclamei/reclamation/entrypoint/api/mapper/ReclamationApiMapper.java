@@ -1,12 +1,12 @@
 package br.com.reclamei.reclamation.entrypoint.api.mapper;
 
 import br.com.reclamei.reclamation.core.domain.ReclamationDomain;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.ReportingPolicy;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationCreateRequest;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationResponse;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationUpdateRequest;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
@@ -20,6 +20,7 @@ public interface ReclamationApiMapper {
 
     ReclamationDomain toDomain(ReclamationUpdateRequest resquest);
 
+    @Mapping(target = "status", expression = "java(status.name())")
     List<ReclamationResponse> toResponse(List<ReclamationDomain> domain);
 
 }

@@ -11,6 +11,8 @@ public class LocalizationDomain implements Serializable {
 
     private Long id;
 
+    private Long locationId;
+
     private String street;
 
     private String district;

@@ -1,7 +1,6 @@
 package br.com.reclamei.reclamation.entrypoint.api.facade;
 
-import br.com.reclamei.reclamation.core.domain.ReclamationDomain;
-import br.com.reclamei.reclamation.core.enumerator.ReclamationStatus;
+import br.com.reclamei.reclamation.core.enumerator.ReclamationStatusEnum;
 import br.com.reclamei.reclamation.core.usecase.ReclamationUseCase;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationCreateRequest;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationResponse;
@@ -24,8 +23,8 @@ public record ReclamationFacade(ReclamationApiMapper mapper, ReclamationUseCase 
         useCase.save(domain);
     }
 
-    public void updateStatus(Long id, ReclamationStatus status) {
-        useCase.updateStatus(id, status);
+    public void updateStatus(Long id, String status) {
+        useCase.updateStatus(id, ReclamationStatusEnum.getByName(status));
     }
 
     public List<ReclamationResponse> findByCompany(Long serviceSubtypeId, Long locationId) {

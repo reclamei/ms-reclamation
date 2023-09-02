@@ -73,7 +73,9 @@ paths:
                     content:
                         application/json:
                             schema:
-                                "$ref": "#/components/schemas/ReclamationResponse"
+                                type: array
+                                items:
+                                    "$ref": "#/components/schemas/ReclamationResponse"
                 '404':
                     description: Reclamation was not found
     /reclamations/citizen/{citizenId}:
@@ -93,11 +95,13 @@ paths:
                     content:
                         application/json:
                             schema:
-                                "$ref": "#/components/schemas/ReclamationResponse"
+                                type: array
+                                items:
+                                    "$ref": "#/components/schemas/ReclamationResponse"
                 '404':
                     description: Reclamation was not found
     /reclamations/{id}/update-status:
-        put:
+        patch:
             tags:
                 - reclamations
             operationId: updateStatus
@@ -131,6 +135,8 @@ components:
             required:
                 - description
                 - photo
+                - citizenId
+                - serviceSubtypeId
             type: object
             properties:
                 description:
@@ -139,9 +145,17 @@ components:
                 photo:
                     type: string
                     example: Harry Potter Description
+                citizenId:
+                    type: long
+                    example: 1
+                serviceSubtypeId:
+                    type: long
+                    example: 1
                 localization:
                     type: object
                     properties:
+                        locationId:
+                            type: long
                         street:
                             type: string
                         district:
@@ -155,12 +169,20 @@ components:
         ReclamationUpdateRequest:
             required:
                 - id
+                - citizenId
+                - serviceSubtypeId
                 - description
                 - photo
             type: object
             properties:
                 id:
                     type: long
+                citizenId:
+                    type: long
+                    example: 1
+                serviceSubtypeId:
+                    type: long
+                    example: 1
                 description:
                     type: string
                     example: Harry Potter
@@ -171,6 +193,8 @@ components:
                     type: object
                     properties:
                         id:
+                            type: long
+                        locationId:
                             type: long
                         street:
                             type: string
@@ -187,6 +211,12 @@ components:
             properties:
                 id:
                     type: long
+                citizenId:
+                    type: long
+                    example: 1
+                serviceSubtypeId:
+                    type: long
+                    example: 1
                 description:
                     type: string
                     example: Harry Potter Description
@@ -212,6 +242,8 @@ components:
                     type: object
                     properties:
                         id:
+                            type: long
+                        locationId:
                             type: long
                         street:
                             type: string

@@ -1,7 +1,6 @@
 package br.com.reclamei.reclamation.dataprovider.database.repository;
 
-import br.com.reclamei.reclamation.core.domain.ReclamationDomain;
-import br.com.reclamei.reclamation.core.enumerator.ReclamationStatus;
+import br.com.reclamei.reclamation.core.enumerator.ReclamationStatusEnum;
 import br.com.reclamei.reclamation.dataprovider.database.entity.ReclamationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -15,10 +14,10 @@ public interface ReclamationRepository extends JpaRepository<ReclamationEntity, 
 
     @Modifying
     @Query("UPDATE ReclamationEntity SET status = :status WHERE id = :id")
-    void updateStatus(Long id, ReclamationStatus status);
+    void updateStatus(Long id, ReclamationStatusEnum status);
 
-    List<ReclamationDomain> findByCitizenId(Long citizenId);
+    List<ReclamationEntity> findByCitizenId(Long citizenId);
 
-    List<ReclamationDomain> findByServiceSubtypeIdAndLocalizationLocationId(Long serviceTypeId, Long locationId);
+    List<ReclamationEntity> findByServiceSubtypeIdAndLocalizationLocationId(Long serviceTypeId, Long locationId);
 
 }
