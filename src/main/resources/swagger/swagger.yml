@@ -197,6 +197,22 @@ paths:
                                     "$ref": "#/components/schemas/ResponseResponse"
                 '404':
                     description: Response was not found
+    /evaluations:
+        post:
+            tags:
+                - evaluations
+            operationId: create
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/EvaluationCreateRequest"
+                required: true
+            responses:
+                '201':
+                    description: The evaluation was created successfully
+                '400':
+                    description: Error creating the evaluation
 components:
     schemas:
         ReclamationCreateRequest:
@@ -374,3 +390,23 @@ components:
                             type: String
                         comment:
                             type: string
+
+        EvaluationCreateRequest:
+            required:
+                - rating
+                - comment
+                - responseId
+            type: object
+            properties:
+                id:
+                    type: long
+                    example: 1
+                responseId:
+                    type: long
+                    example: 1
+                rating:
+                    type: string
+                    example: FELIZ
+                comment:
+                    type: string
+                    example: FELIZ

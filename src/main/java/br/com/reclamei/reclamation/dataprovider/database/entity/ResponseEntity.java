@@ -38,7 +38,7 @@ public class ResponseEntity implements Serializable {
     @JoinColumn(name = "reclamation_id", nullable = false)
     private ReclamationEntity reclamation;
 
-    @OneToOne(mappedBy = "response", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @OneToOne(mappedBy = "response", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private EvaluationEntity evaluation;
 
 }

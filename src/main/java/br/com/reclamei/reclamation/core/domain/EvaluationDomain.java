@@ -15,6 +15,8 @@ public class EvaluationDomain {
 
     private String comment;
 
+    private Long responseId;
+
     private LocalDateTime createdAt;
 
 }
