@@ -17,6 +17,6 @@ public class ResponseDomain {
 
     private ReclamationDomain reclamation;
 
-    private EvaluationDomain evaluation = new EvaluationDomain();
+    private EvaluationDomain evaluation;
 
 }
