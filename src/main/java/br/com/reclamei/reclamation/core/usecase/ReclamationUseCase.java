@@ -1,7 +1,7 @@
 package br.com.reclamei.reclamation.core.usecase;
 
 import br.com.reclamei.reclamation.core.domain.ReclamationDomain;
-import br.com.reclamei.reclamation.core.enumerator.ReclamationStatusEnum;
+import br.com.reclamei.reclamation.core.type.ReclamationStatusType;
 import br.com.reclamei.reclamation.core.gateway.ReclamationGateway;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,7 +15,7 @@ public record ReclamationUseCase(ReclamationGateway gateway) {
         gateway.save(domain);
     }
 
-    public void updateStatus(Long id, ReclamationStatusEnum status) {
+    public void updateStatus(Long id, ReclamationStatusType status) {
         log.info("[ReclamationUseCase] :: updateStatus :: Updating reclamation {} to {}", id, status);
         gateway.updateStatus(id, status);
     }

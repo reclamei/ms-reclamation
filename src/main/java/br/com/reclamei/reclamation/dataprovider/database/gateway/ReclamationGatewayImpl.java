@@ -1,7 +1,7 @@
 package br.com.reclamei.reclamation.dataprovider.database.gateway;
 
 import br.com.reclamei.reclamation.core.domain.ReclamationDomain;
-import br.com.reclamei.reclamation.core.enumerator.ReclamationStatusEnum;
+import br.com.reclamei.reclamation.core.type.ReclamationStatusType;
 import br.com.reclamei.reclamation.core.exception.NotFoundException;
 import br.com.reclamei.reclamation.core.gateway.ReclamationGateway;
 import br.com.reclamei.reclamation.dataprovider.database.mapper.ReclamationDatabaseMapper;
@@ -29,7 +29,7 @@ public class ReclamationGatewayImpl implements ReclamationGateway {
 
     @Override
     @Transactional
-    public void updateStatus(final Long id, final ReclamationStatusEnum status) {
+    public void updateStatus(final Long id, final ReclamationStatusType status) {
         if (!repository.existsById(id)) {
             throw new NotFoundException(format("[ReclamationGatewayImpl] :: updateStatus :: Reclamation with id %s not found", id));
         }
