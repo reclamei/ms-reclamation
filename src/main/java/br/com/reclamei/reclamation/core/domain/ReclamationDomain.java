@@ -1,6 +1,6 @@
 package br.com.reclamei.reclamation.core.domain;
 
-import br.com.reclamei.reclamation.core.enumerator.ReclamationStatusEnum;
+import br.com.reclamei.reclamation.core.type.ReclamationStatusType;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +22,7 @@ public class ReclamationDomain {
 
     private String photo;
 
-    private ReclamationStatusEnum status = ReclamationStatusEnum.OPEN;
+    private ReclamationStatusType status = ReclamationStatusType.OPEN;
 
     private LocalizationDomain localization = new LocalizationDomain();
 
