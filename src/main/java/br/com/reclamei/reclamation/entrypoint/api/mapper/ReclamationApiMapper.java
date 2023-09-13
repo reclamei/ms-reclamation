@@ -14,11 +14,11 @@ import java.util.List;
 public interface ReclamationApiMapper {
 
     @Mapping(target = "id", ignore = true)
-    ReclamationDomain toDomain(ReclamationCreateRequest resquest);
+    ReclamationDomain toDomain(ReclamationCreateRequest request);
 
     ReclamationResponse toResponse(ReclamationDomain domain);
 
-    ReclamationDomain toDomain(ReclamationUpdateRequest resquest);
+    ReclamationDomain toDomain(ReclamationUpdateRequest request);
 
     @Mapping(target = "status", expression = "java(status.name())")
     List<ReclamationResponse> toResponse(List<ReclamationDomain> domain);

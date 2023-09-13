@@ -129,6 +129,74 @@ paths:
                     description: The reclamation status was update successfully
                 '400':
                     description: Error updating the reclamation
+    /responses:
+        post:
+            tags:
+                - responses
+            operationId: create
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ResponseCreateRequest"
+                required: true
+            responses:
+                '201':
+                    description: The response was created successfully
+                '400':
+                    description: Error creating the response
+        put:
+            tags:
+                - responses
+            operationId: update
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ResponseUpdateRequest"
+                required: true
+            responses:
+                '204':
+                    description: The response was update successfully
+                '400':
+                    description: Error updating the response
+        delete:
+            tags:
+                - responses
+            operationId: deleteById
+            parameters:
+                -   name: id
+                    in: path
+                    required: true
+                    schema:
+                        type: long
+            responses:
+                '204':
+                    description: Reclamation was successfully deleted
+                '404':
+                    description: Reclamation was not found
+    /responses/reclamation/{reclamationId}:
+        get:
+            tags:
+                - responses
+            operationId: findByReclamation
+            parameters:
+                -   name: reclamationId
+                    in: path
+                    required: true
+                    schema:
+                        type: long
+            responses:
+                '200':
+                    description: Response was found
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    "$ref": "#/components/schemas/ResponseResponse"
+                '404':
+                    description: Response was not found
 components:
     schemas:
         ReclamationCreateRequest:
@@ -254,4 +322,55 @@ components:
                         latitude:
                             type: string
                         longitude:
+                            type: string
+
+        ResponseCreateRequest:
+            required:
+                - reclamationId
+                - description
+            type: object
+            properties:
+                reclamationId:
+                    type: long
+                    example: 1
+                description:
+                    type: string
+                    example: Harry Potter Description
+        ResponseUpdateRequest:
+            required:
+                - id
+                - reclamationId
+                - description
+            type: object
+            properties:
+                id:
+                    type: long
+                reclamationId:
+                    type: long
+                    example: 1
+                description:
+                    type: string
+                    example: Harry Potter Description
+        ResponseResponse:
+            type: object
+            properties:
+                id:
+                    type: long
+                reclamationId:
+                    type: long
+                    example: 1
+                description:
+                    type: string
+                    example: Harry Potter Description
+                createdAt:
+                    type: string
+                    format: date-time
+                evaluation:
+                    type: object
+                    properties:
+                        id:
+                            type: long
+                        rating:
+                            type: String
+                        comment:
                             type: string

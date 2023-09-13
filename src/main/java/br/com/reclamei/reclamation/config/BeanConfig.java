@@ -41,7 +41,7 @@ public class BeanConfig {
     static TypeFilter createTypeFilter() {
         return (MetadataReader mr, MetadataReaderFactory mrf) ->
             ENTITIES_FILTER.stream()
-                .noneMatch(e -> mr.getClassMetadata().getClassName().contains(e));
+                .noneMatch(e -> mr.getClassMetadata().getClassName().endsWith(e));
     }
 
 }
