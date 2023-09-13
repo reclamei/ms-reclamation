@@ -1,0 +1,26 @@
+server:
+    port: 8081
+spring:
+    application:
+        name: ms-reclamation
+    datasource:
+        driverClassName: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://${RECLAMATION_DB_HOST}:${RECLAMATION_DB_PORT}/${RECLAMATION_DB_NAME}?createDatabaseIfNotExist=true&${RECLAMATION_DB_OPTS}&${RECLAMATION_DB_SESSION_OPTS}
+        username: ${RECLAMATION_DB_USER}
+        password: ${RECLAMATION_DB_PASSWORD}
+        hikari:
+            poolName: Hikari
+            auto-commit: false
+            connection-test-query: SELECT 1
+    jpa:
+        show-sql: true
+        open-in-view: false
+        database: default
+        hibernate.ddl-auto: none
+        database-platform: org.hibernate.dialect.MySQLDialect
+        properties.hibernate:
+            jdbc.time_zone: UTC
+    liquibase:
+        enabled: true
+        change-log: classpath:/liquibase/master.xml
+        default-schema: reclamation_db
