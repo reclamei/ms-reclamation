@@ -4,3 +4,254 @@ info:
     version: v1
 servers:
     -   url: http://localhost:8081
+paths:
+    /reclamations:
+        post:
+            tags:
+                - reclamations
+            operationId: create
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ReclamationCreateRequest"
+                required: true
+            responses:
+                '201':
+                    description: The reclamation was created successfully
+                '400':
+                    description: Error creating the reclamation
+        put:
+            tags:
+                - reclamations
+            operationId: update
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/ReclamationUpdateRequest"
+                required: true
+            responses:
+                '204':
+                    description: The reclamation was update successfully
+                '400':
+                    description: Error updating the reclamation
+        delete:
+            tags:
+                - reclamations
+            operationId: deleteById
+            parameters:
+                -   name: id
+                    in: path
+                    required: true
+                    schema:
+                        type: long
+            responses:
+                '204':
+                    description: Reclamation was successfully deleted
+                '404':
+                    description: Reclamation was not found
+    /reclamations/service-subtype/{serviceSubtypeId}/location/{locationId}:
+        get:
+            tags:
+                - reclamations
+            operationId: findByCompany
+            parameters:
+                -   name: serviceSubtypeId
+                    in: path
+                    required: true
+                    schema:
+                        type: long
+                -   name: locationId
+                    in: path
+                    required: true
+                    schema:
+                        type: long
+            responses:
+                '200':
+                    description: Reclamation was found
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    "$ref": "#/components/schemas/ReclamationResponse"
+                '404':
+                    description: Reclamation was not found
+    /reclamations/citizen/{citizenId}:
+        get:
+            tags:
+                - reclamations
+            operationId: findByCitizen
+            parameters:
+                -   name: citizenId
+                    in: path
+                    required: true
+                    schema:
+                        type: long
+            responses:
+                '200':
+                    description: Reclamation was found
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    "$ref": "#/components/schemas/ReclamationResponse"
+                '404':
+                    description: Reclamation was not found
+    /reclamations/{id}/update-status:
+        patch:
+            tags:
+                - reclamations
+            operationId: updateStatus
+            parameters:
+                -   name: id
+                    in: path
+                    required: true
+                    schema:
+                        type: long
+                -   name: status
+                    in: query
+                    required: true
+                    schema:
+                        type: string
+                        enum:
+                            - OPEN
+                            - REJECTED
+                            - IN_ANALYSIS
+                            - UNIDENTIFIED
+                            - NO_FORECAST
+                            - FORECAST
+                            - RESOLVED
+            responses:
+                '204':
+                    description: The reclamation status was update successfully
+                '400':
+                    description: Error updating the reclamation
+components:
+    schemas:
+        ReclamationCreateRequest:
+            required:
+                - description
+                - photo
+                - citizenId
+                - serviceSubtypeId
+            type: object
+            properties:
+                description:
+                    type: string
+                    example: Harry Potter
+                photo:
+                    type: string
+                    example: Harry Potter Description
+                citizenId:
+                    type: long
+                    example: 1
+                serviceSubtypeId:
+                    type: long
+                    example: 1
+                localization:
+                    type: object
+                    properties:
+                        locationId:
+                            type: long
+                        street:
+                            type: string
+                        district:
+                            type: string
+                        city:
+                            type: string
+                        latitude:
+                            type: string
+                        longitude:
+                            type: string
+        ReclamationUpdateRequest:
+            required:
+                - id
+                - citizenId
+                - serviceSubtypeId
+                - description
+                - photo
+            type: object
+            properties:
+                id:
+                    type: long
+                citizenId:
+                    type: long
+                    example: 1
+                serviceSubtypeId:
+                    type: long
+                    example: 1
+                description:
+                    type: string
+                    example: Harry Potter
+                photo:
+                    type: string
+                    example: Harry Potter Description
+                localization:
+                    type: object
+                    properties:
+                        id:
+                            type: long
+                        locationId:
+                            type: long
+                        street:
+                            type: string
+                        district:
+                            type: string
+                        city:
+                            type: string
+                        latitude:
+                            type: string
+                        longitude:
+                            type: string
+        ReclamationResponse:
+            type: object
+            properties:
+                id:
+                    type: long
+                citizenId:
+                    type: long
+                    example: 1
+                serviceSubtypeId:
+                    type: long
+                    example: 1
+                description:
+                    type: string
+                    example: Harry Potter Description
+                analyzedAt:
+                    type: string
+                    format: date-time
+                    example: Harry Potter Description
+                photo:
+                    type: string
+                    example: Harry Potter Description
+                status:
+                    type: string
+                    enum:
+                        - OPEN
+                        - REJECTED
+                        - IN_ANALYSIS
+                        - UNIDENTIFIED
+                        - NO_FORECAST
+                        - FORECAST
+                        - RESOLVED
+                    example: REJECTED
+                localization:
+                    type: object
+                    properties:
+                        id:
+                            type: long
+                        locationId:
+                            type: long
+                        street:
+                            type: string
+                        district:
+                            type: string
+                        city:
+                            type: string
+                        latitude:
+                            type: string
+                        longitude:
+                            type: string

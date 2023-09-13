@@ -1,4 +1,4 @@
-package br.com.reclamei.company.config;
+package br.com.reclamei.reclamation.config;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
