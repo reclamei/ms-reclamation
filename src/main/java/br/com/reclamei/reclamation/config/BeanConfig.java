@@ -18,7 +18,7 @@ import java.util.List;
 public class BeanConfig {
 
     private static final List<String> ENTITIES_FILTER = List.of("Domain", "Dto", "Request", "Response", "Builder", "Exception", "Utils",
-        "Producer", "Body", "Message", "Entity", "RepositoryImpl", "Error", "Enum");
+        "Producer", "Body", "Message", "Entity", "RepositoryImpl", "Error", "Enum", "Type");
 
     @Bean
     BeanFactoryPostProcessor beanFactoryPostProcessor(ApplicationContext beanRegistry) {
