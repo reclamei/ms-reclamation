@@ -1,14 +1,15 @@
 package br.com.reclamei.reclamation.core.usecase;
 
 import br.com.reclamei.reclamation.core.domain.ReclamationDomain;
-import br.com.reclamei.reclamation.core.type.ReclamationStatusType;
+import br.com.reclamei.reclamation.core.gateway.CompanyGateway;
 import br.com.reclamei.reclamation.core.gateway.ReclamationGateway;
+import br.com.reclamei.reclamation.core.type.ReclamationStatusType;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
 @Slf4j
-public record ReclamationUseCase(ReclamationGateway gateway) {
+public record ReclamationUseCase(ReclamationGateway gateway, CompanyGateway companyGateway) {
 
     public void save(ReclamationDomain domain) {
         log.info("[ReclamationUseCase] :: create :: Creating new reclamation. {}", domain);
@@ -22,7 +23,10 @@ public record ReclamationUseCase(ReclamationGateway gateway) {
 
     public List<ReclamationDomain> findByCompany(Long serviceSubtypeId, Long locationId) {
         log.info("[ReclamationUseCase] :: findByCompany :: Finding reclamation with [service_subtype_id: {}, location_id: {}]", serviceSubtypeId, locationId);
-        return gateway.findByCompany(serviceSubtypeId, locationId);
+        return gateway.findByCompany(serviceSubtypeId, locationId)
+            .stream()
+            .map(this::fillServiceProperties)
+            .toList();
     }
 
     public List<ReclamationDomain> findByCitizen(Long citizenId) {
@@ -33,5 +37,13 @@ public record ReclamationUseCase(ReclamationGateway gateway) {
     public void deleteById(Long id) {
         log.info("[ReclamationUseCase] :: deleteById :: Deleting reclamation with id {}", id);
         gateway.deleteById(id);
+    }
+
+    private ReclamationDomain fillServiceProperties(final ReclamationDomain reclamation) {
+        var serviceSubtype = companyGateway.getServiceSubtype(reclamation.getServiceSubtypeId());
+        reclamation.setServiceSubtypeName(serviceSubtype.getName());
+        reclamation.setServiceName(serviceSubtype.getServiceName());
+
+        return reclamation;
     }
 }
