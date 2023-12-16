@@ -301,6 +301,12 @@ components:
                 serviceSubtypeId:
                     type: long
                     example: 1
+                serviceName:
+                    type: string
+                    example: Iluminação Pública
+                serviceSubtypeName:
+                    type: string
+                    example: Lâmpada queimada
                 description:
                     type: string
                     example: Harry Potter Description
