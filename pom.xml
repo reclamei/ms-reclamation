@@ -21,7 +21,6 @@
 		<swagger-annotations.version>1.6.11</swagger-annotations.version>
 		<swagger-annotations-core.version>2.2.15</swagger-annotations-core.version>
 		<swagger-codegen-maven-plugin.version>3.0.46</swagger-codegen-maven-plugin.version>
-		<swagger-codegen-maven-plugin.version>3.0.36</swagger-codegen-maven-plugin.version>
 		<spring-cloud.version>2022.0.4</spring-cloud.version>
 	</properties>
 
@@ -46,6 +45,10 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 
 		<dependency>

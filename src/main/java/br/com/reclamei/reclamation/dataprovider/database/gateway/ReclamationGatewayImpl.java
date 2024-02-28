@@ -1,9 +1,9 @@
 package br.com.reclamei.reclamation.dataprovider.database.gateway;
 
 import br.com.reclamei.reclamation.core.domain.ReclamationDomain;
-import br.com.reclamei.reclamation.core.type.ReclamationStatusType;
 import br.com.reclamei.reclamation.core.exception.NotFoundException;
 import br.com.reclamei.reclamation.core.gateway.ReclamationGateway;
+import br.com.reclamei.reclamation.core.type.ReclamationStatusType;
 import br.com.reclamei.reclamation.dataprovider.database.mapper.ReclamationDatabaseMapper;
 import br.com.reclamei.reclamation.dataprovider.database.repository.ReclamationRepository;
 import lombok.RequiredArgsConstructor;

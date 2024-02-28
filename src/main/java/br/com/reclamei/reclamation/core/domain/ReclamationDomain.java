@@ -18,6 +18,10 @@ public class ReclamationDomain {
 
     private Long serviceSubtypeId;
 
+    private String serviceName;
+
+    private String serviceSubtypeName;
+
     private LocalDateTime analyzedAt;
 
     private String photo;
