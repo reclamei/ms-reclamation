@@ -5,13 +5,15 @@ import br.com.reclamei.reclamation.core.usecase.ReclamationUseCase;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationCreateRequest;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationResponse;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationUpdateRequest;
+import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationsCompanyBody;
+import br.com.reclamei.reclamation.entrypoint.api.mapper.CompanyFilterMapper;
 import br.com.reclamei.reclamation.entrypoint.api.mapper.ReclamationApiMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
-public record ReclamationFacade(ReclamationApiMapper mapper, ReclamationUseCase useCase) {
+public record ReclamationFacade(ReclamationApiMapper mapper, CompanyFilterMapper companyMapper, ReclamationUseCase useCase) {
 
     public void create(ReclamationCreateRequest request) {
         var domain = mapper.toDomain(request);
@@ -39,4 +41,8 @@ public record ReclamationFacade(ReclamationApiMapper mapper, ReclamationUseCase 
         useCase.deleteById(id);
     }
 
+    public List<ReclamationResponse> findAllByCompany(List<ReclamationsCompanyBody> request) {
+        var domain = companyMapper.toDomain(request);
+        return mapper.toResponse(useCase.findAllByCompany(domain));
+    }
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 import static java.lang.String.format;
 
@@ -54,6 +55,16 @@ public class ReclamationGatewayImpl implements ReclamationGateway {
             throw new NotFoundException(format("[ReclamationGatewayImpl] :: deleteById :: Reclamation with id %s not found", id));
         }
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<ReclamationDomain> findAllByCompany(final Map<Long, List<Long>> companyFilter) {
+        final var entities = repository.findByServiceSubtypeIdIn(companyFilter.keySet());
+        final var entitiesFiltered = entities.stream()
+            .filter(entity -> companyFilter.get(entity.getServiceSubtypeId()).contains(entity.getLocalization().getLocationId()))
+            .toList();
+
+        return mapper.toDomain(entitiesFiltered);
     }
 
 }

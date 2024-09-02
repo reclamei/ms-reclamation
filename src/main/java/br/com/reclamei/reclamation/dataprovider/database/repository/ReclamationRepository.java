@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface ReclamationRepository extends JpaRepository<ReclamationEntity, Long> {
@@ -20,4 +21,5 @@ public interface ReclamationRepository extends JpaRepository<ReclamationEntity, 
 
     List<ReclamationEntity> findByServiceSubtypeIdAndLocalizationLocationId(Long serviceTypeId, Long locationId);
 
+    List<ReclamationEntity> findByServiceSubtypeIdIn(Set<Long> serviceTypeIds);
 }

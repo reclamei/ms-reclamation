@@ -7,6 +7,7 @@ import br.com.reclamei.reclamation.core.type.ReclamationStatusType;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 public record ReclamationUseCase(ReclamationGateway gateway, CompanyGateway companyGateway) {
@@ -45,5 +46,10 @@ public record ReclamationUseCase(ReclamationGateway gateway, CompanyGateway comp
         reclamation.setServiceName(serviceSubtype.getServiceName());
 
         return reclamation;
+    }
+
+    public List<ReclamationDomain> findAllByCompany(Map<Long, List<Long>> companyFilterDomains) {
+        log.info("[ReclamationUseCase] :: findAllByCompany :: Finding all reclamations by company");
+        return gateway.findAllByCompany(companyFilterDomains);
     }
 }

@@ -3,6 +3,7 @@ package br.com.reclamei.reclamation.entrypoint.api.controller;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationCreateRequest;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationResponse;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationUpdateRequest;
+import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationsCompanyBody;
 import br.com.reclamei.reclamation.entrypoint.api.facade.ReclamationFacade;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +43,12 @@ public class ReclamationController implements ReclamationsApi {
     public ResponseEntity<Void> deleteById(@PathVariable final Long id) {
         facade.deleteById(id);
         return ResponseEntity.status(NO_CONTENT).build();
+    }
+
+    @Override
+    @GetMapping("/company")
+    public ResponseEntity<List<ReclamationResponse>> findAllByCompany(@RequestBody final List<ReclamationsCompanyBody> body) {
+        return ResponseEntity.status(OK).body(facade.findAllByCompany(body));
     }
 
     @Override

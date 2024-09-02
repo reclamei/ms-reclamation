@@ -78,6 +78,36 @@ paths:
                                     "$ref": "#/components/schemas/ReclamationResponse"
                 '404':
                     description: Reclamation was not found
+    /reclamations/company:
+        get:
+            tags:
+                - reclamations
+            operationId: findAllByCompany
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: array
+                            items:
+                                type: object
+                                properties:
+                                    serviceSubtypeId:
+                                        type: long
+                                    locations:
+                                        type: array
+                                        items:
+                                            type: long
+            responses:
+                '200':
+                    description: Reclamation was found
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    "$ref": "#/components/schemas/ReclamationResponse"
+                '404':
+                    description: Reclamation was not found
     /reclamations/citizen/{citizenId}:
         get:
             tags:
