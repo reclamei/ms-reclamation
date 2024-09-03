@@ -1,7 +1,6 @@
 package br.com.reclamei.reclamation.core.usecase;
 
 import br.com.reclamei.reclamation.core.domain.ReclamationDomain;
-import br.com.reclamei.reclamation.core.gateway.CompanyGateway;
 import br.com.reclamei.reclamation.core.gateway.ReclamationGateway;
 import br.com.reclamei.reclamation.core.type.ReclamationStatusType;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-public record ReclamationUseCase(ReclamationGateway gateway, CompanyGateway companyGateway) {
+public record ReclamationUseCase(ReclamationGateway gateway) {
 
     public void save(ReclamationDomain domain) {
         log.info("[ReclamationUseCase] :: create :: Creating new reclamation. {}", domain);
@@ -24,10 +23,7 @@ public record ReclamationUseCase(ReclamationGateway gateway, CompanyGateway comp
 
     public List<ReclamationDomain> findByCompany(Long serviceSubtypeId, Long locationId) {
         log.info("[ReclamationUseCase] :: findByCompany :: Finding reclamation with [service_subtype_id: {}, location_id: {}]", serviceSubtypeId, locationId);
-        return gateway.findByCompany(serviceSubtypeId, locationId)
-            .stream()
-            .map(this::fillServiceProperties)
-            .toList();
+        return gateway.findByCompany(serviceSubtypeId, locationId);
     }
 
     public List<ReclamationDomain> findByCitizen(Long citizenId) {
@@ -38,14 +34,6 @@ public record ReclamationUseCase(ReclamationGateway gateway, CompanyGateway comp
     public void deleteById(Long id) {
         log.info("[ReclamationUseCase] :: deleteById :: Deleting reclamation with id {}", id);
         gateway.deleteById(id);
-    }
-
-    private ReclamationDomain fillServiceProperties(final ReclamationDomain reclamation) {
-        var serviceSubtype = companyGateway.getServiceSubtype(reclamation.getServiceSubtypeId());
-        reclamation.setServiceSubtypeName(serviceSubtype.getName());
-        reclamation.setServiceName(serviceSubtype.getServiceName());
-
-        return reclamation;
     }
 
     public List<ReclamationDomain> findAllByCompany(Map<Long, List<Long>> companyFilterDomains) {
