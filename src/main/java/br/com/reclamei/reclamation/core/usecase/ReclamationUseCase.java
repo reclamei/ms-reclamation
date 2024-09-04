@@ -50,6 +50,9 @@ public record ReclamationUseCase(ReclamationGateway gateway, CompanyGateway comp
 
     public List<ReclamationDomain> findAllByCompany(Map<Long, List<Long>> companyFilterDomains) {
         log.info("[ReclamationUseCase] :: findAllByCompany :: Finding all reclamations by company");
-        return gateway.findAllByCompany(companyFilterDomains);
+        return gateway.findAllByCompany(companyFilterDomains)
+                .stream()
+                .map(this::fillServiceProperties)
+                .toList();
     }
 }

@@ -79,7 +79,7 @@ paths:
                 '404':
                     description: Reclamation was not found
     /reclamations/company:
-        get:
+        post:
             tags:
                 - reclamations
             operationId: findAllByCompany
@@ -339,6 +339,10 @@ components:
                     example: Lâmpada queimada
                 description:
                     type: string
+                    example: Harry Potter Description
+                createdAt:
+                    type: string
+                    format: date-time
                     example: Harry Potter Description
                 analyzedAt:
                     type: string

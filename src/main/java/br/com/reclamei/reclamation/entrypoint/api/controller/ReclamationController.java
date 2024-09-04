@@ -46,7 +46,7 @@ public class ReclamationController implements ReclamationsApi {
     }
 
     @Override
-    @GetMapping("/company")
+    @PostMapping("/company")
     public ResponseEntity<List<ReclamationResponse>> findAllByCompany(@RequestBody final List<ReclamationsCompanyBody> body) {
         return ResponseEntity.status(OK).body(facade.findAllByCompany(body));
     }
