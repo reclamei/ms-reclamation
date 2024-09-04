@@ -132,7 +132,7 @@ paths:
                     description: Reclamation was found
                     content:
                         application/json:
-                            schema:rd
+                            schema:
                                 "$ref": "#/components/schemas/DashboardResponse"
                 '404':
                     description: Reclamation was not found
@@ -483,7 +483,7 @@ components:
             properties:
                 totalCount:
                     type: long
-                responseCount:
+                answeredCount:
                     type: long
                     example: 1
                 unansweredCount:

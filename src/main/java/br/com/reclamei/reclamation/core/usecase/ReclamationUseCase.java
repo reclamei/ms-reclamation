@@ -68,11 +68,11 @@ public record ReclamationUseCase(ReclamationGateway gateway, CompanyGateway comp
             .map(this::fillServiceProperties)
             .toList();
         final var totalCount = (long) reclamations.size();
-        final var responseCount = reclamations.stream().filter(item -> !List.of(OPEN, IN_ANALYSIS).contains(item.getStatus())).count();
-        final var unansweredCount = totalCount - responseCount;
+        final var answeredCount = reclamations.stream().filter(item -> !List.of(OPEN, IN_ANALYSIS).contains(item.getStatus())).count();
+        final var unansweredCount = totalCount - answeredCount;
         final var resolvedCount = reclamations.stream().filter(item -> List.of(REJECTED, UNIDENTIFIED, RESOLVED).contains(item.getStatus())).count();
         final var unresolvedCount = totalCount - resolvedCount;
 
-        return new DashboardDomain(totalCount, responseCount, unansweredCount, resolvedCount, unresolvedCount);
+        return new DashboardDomain(totalCount, answeredCount, unansweredCount, resolvedCount, unresolvedCount);
     }
 }
