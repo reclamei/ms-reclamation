@@ -4,6 +4,7 @@ import br.com.reclamei.reclamation.core.domain.ReclamationDomain;
 import br.com.reclamei.reclamation.core.type.ReclamationStatusType;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ReclamationGateway {
 
@@ -17,4 +18,5 @@ public interface ReclamationGateway {
 
     void deleteById(Long id);
 
+    List<ReclamationDomain> findAllByCompany(Map<Long, List<Long>> companyFilterDomains);
 }

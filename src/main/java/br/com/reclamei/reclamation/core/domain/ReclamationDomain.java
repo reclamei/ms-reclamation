@@ -22,6 +22,8 @@ public class ReclamationDomain {
 
     private String serviceSubtypeName;
 
+    private LocalDateTime createdAt;
+
     private LocalDateTime analyzedAt;
 
     private String photo;

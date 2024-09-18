@@ -1,12 +1,18 @@
 package br.com.reclamei.reclamation.core.usecase;
 
+import br.com.reclamei.reclamation.core.domain.DashboardDomain;
 import br.com.reclamei.reclamation.core.domain.ReclamationDomain;
 import br.com.reclamei.reclamation.core.gateway.CompanyGateway;
 import br.com.reclamei.reclamation.core.gateway.ReclamationGateway;
 import br.com.reclamei.reclamation.core.type.ReclamationStatusType;
+import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationResponse;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
+import static br.com.reclamei.reclamation.core.type.ReclamationStatusType.*;
 
 @Slf4j
 public record ReclamationUseCase(ReclamationGateway gateway, CompanyGateway companyGateway) {
@@ -45,5 +51,28 @@ public record ReclamationUseCase(ReclamationGateway gateway, CompanyGateway comp
         reclamation.setServiceName(serviceSubtype.getServiceName());
 
         return reclamation;
+    }
+
+    public List<ReclamationDomain> findAllByCompany(Map<Long, List<Long>> companyFilterDomains) {
+        log.info("[ReclamationUseCase] :: findAllByCompany :: Finding all reclamations by company");
+        return gateway.findAllByCompany(companyFilterDomains)
+                .stream()
+                .map(this::fillServiceProperties)
+                .toList();
+    }
+
+    public DashboardDomain buildDashboardByCompany(Map<Long, List<Long>> companyFilterDomains) {
+        log.info("[ReclamationUseCase] :: buildDashboardByCompany :: Building dashboard by company");
+        final var reclamations = gateway.findAllByCompany(companyFilterDomains)
+            .stream()
+            .map(this::fillServiceProperties)
+            .toList();
+        final var totalCount = (long) reclamations.size();
+        final var answeredCount = reclamations.stream().filter(item -> !List.of(OPEN, IN_ANALYSIS).contains(item.getStatus())).count();
+        final var unansweredCount = totalCount - answeredCount;
+        final var resolvedCount = reclamations.stream().filter(item -> List.of(REJECTED, UNIDENTIFIED, RESOLVED).contains(item.getStatus())).count();
+        final var unresolvedCount = totalCount - resolvedCount;
+
+        return new DashboardDomain(totalCount, answeredCount, unansweredCount, resolvedCount, unresolvedCount);
     }
 }
