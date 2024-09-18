@@ -19,4 +19,6 @@ public interface ReclamationGateway {
     void deleteById(Long id);
 
     List<ReclamationDomain> findAllByCompany(Map<Long, List<Long>> companyFilterDomains);
+
+    List<ReclamationDomain> findAll();
 }

@@ -67,4 +67,9 @@ public class ReclamationGatewayImpl implements ReclamationGateway {
         return mapper.toDomain(entitiesFiltered);
     }
 
+    @Override
+    public List<ReclamationDomain> findAll() {
+        return mapper.toDomain(repository.findAll());
+    }
+
 }

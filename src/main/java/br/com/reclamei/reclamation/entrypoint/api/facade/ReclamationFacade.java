@@ -2,6 +2,7 @@ package br.com.reclamei.reclamation.entrypoint.api.facade;
 
 import br.com.reclamei.reclamation.core.type.ReclamationStatusType;
 import br.com.reclamei.reclamation.core.usecase.ReclamationUseCase;
+import br.com.reclamei.reclamation.entrypoint.api.dto.CompanyDashboardBody;
 import br.com.reclamei.reclamation.entrypoint.api.dto.DashboardResponse;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationCreateRequest;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationResponse;
@@ -47,8 +48,8 @@ public record ReclamationFacade(ReclamationApiMapper mapper, CompanyFilterMapper
         return mapper.toResponse(useCase.findAllByCompany(domain));
     }
 
-    public DashboardResponse buildDashboardByCompany(List<ReclamationsCompanyBody> request) {
-        var domain = companyMapper.toDomain(request);
-        return mapper.toResponse(useCase.buildDashboardByCompany(domain));
+    public DashboardResponse buildDashboardByCompany(CompanyDashboardBody request) {
+        var domain = companyMapper.toDomain(request.getCoverages());
+        return mapper.toResponse(useCase.buildDashboardByCompany(request.isIsAdmin(), domain));
     }
 }

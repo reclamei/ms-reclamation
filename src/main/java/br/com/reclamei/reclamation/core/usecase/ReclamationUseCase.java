@@ -53,7 +53,7 @@ public record ReclamationUseCase(ReclamationGateway gateway, CompanyGateway comp
         return reclamation;
     }
 
-    public List<ReclamationDomain> findAllByCompany(Map<Long, List<Long>> companyFilterDomains) {
+    public List<ReclamationDomain> findAllByCompany(final Map<Long, List<Long>> companyFilterDomains) {
         log.info("[ReclamationUseCase] :: findAllByCompany :: Finding all reclamations by company");
         return gateway.findAllByCompany(companyFilterDomains)
                 .stream()
@@ -61,12 +61,10 @@ public record ReclamationUseCase(ReclamationGateway gateway, CompanyGateway comp
                 .toList();
     }
 
-    public DashboardDomain buildDashboardByCompany(Map<Long, List<Long>> companyFilterDomains) {
+    public DashboardDomain buildDashboardByCompany(final Boolean isAdmin, final Map<Long, List<Long>> companyFilterDomains) {
         log.info("[ReclamationUseCase] :: buildDashboardByCompany :: Building dashboard by company");
-        final var reclamations = gateway.findAllByCompany(companyFilterDomains)
-            .stream()
-            .map(this::fillServiceProperties)
-            .toList();
+        final var reclamations = getReclamations(isAdmin, companyFilterDomains);
+
         final var totalCount = (long) reclamations.size();
         final var answeredCount = reclamations.stream().filter(item -> !List.of(OPEN, IN_ANALYSIS).contains(item.getStatus())).count();
         final var unansweredCount = totalCount - answeredCount;
@@ -75,4 +73,12 @@ public record ReclamationUseCase(ReclamationGateway gateway, CompanyGateway comp
 
         return new DashboardDomain(totalCount, answeredCount, unansweredCount, resolvedCount, unresolvedCount);
     }
+
+    private List<ReclamationDomain> getReclamations(final Boolean isAdmin, final Map<Long, List<Long>> companyFilterDomains) {
+        if(Boolean.TRUE.equals(isAdmin)) {
+            return gateway.findAll();
+        }
+        return gateway.findAllByCompany(companyFilterDomains);
+    }
+
 }
