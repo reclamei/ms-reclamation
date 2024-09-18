@@ -2,6 +2,7 @@ package br.com.reclamei.reclamation.entrypoint.api.facade;
 
 import br.com.reclamei.reclamation.core.type.ReclamationStatusType;
 import br.com.reclamei.reclamation.core.usecase.ReclamationUseCase;
+import br.com.reclamei.reclamation.entrypoint.api.dto.DashboardResponse;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationCreateRequest;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationResponse;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationUpdateRequest;
@@ -44,5 +45,10 @@ public record ReclamationFacade(ReclamationApiMapper mapper, CompanyFilterMapper
     public List<ReclamationResponse> findAllByCompany(List<ReclamationsCompanyBody> request) {
         var domain = companyMapper.toDomain(request);
         return mapper.toResponse(useCase.findAllByCompany(domain));
+    }
+
+    public DashboardResponse buildDashboardByCompany(List<ReclamationsCompanyBody> request) {
+        var domain = companyMapper.toDomain(request);
+        return mapper.toResponse(useCase.buildDashboardByCompany(domain));
     }
 }

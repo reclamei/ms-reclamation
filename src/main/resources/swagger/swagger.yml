@@ -108,6 +108,34 @@ paths:
                                     "$ref": "#/components/schemas/ReclamationResponse"
                 '404':
                     description: Reclamation was not found
+    /reclamations/company/dashboard:
+        post:
+            tags:
+                - reclamations
+            operationId: buildDashboardByCompany
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: array
+                            items:
+                                type: object
+                                properties:
+                                    serviceSubtypeId:
+                                        type: long
+                                    locations:
+                                        type: array
+                                        items:
+                                            type: long
+            responses:
+                '200':
+                    description: Reclamation was found
+                    content:
+                        application/json:
+                            schema:
+                                "$ref": "#/components/schemas/DashboardResponse"
+                '404':
+                    description: Reclamation was not found
     /reclamations/citizen/{citizenId}:
         get:
             tags:
@@ -450,3 +478,20 @@ components:
                 comment:
                     type: string
                     example: FELIZ
+
+        DashboardResponse:
+            properties:
+                totalCount:
+                    type: long
+                answeredCount:
+                    type: long
+                    example: 1
+                unansweredCount:
+                    type: long
+                    example: 1
+                resolvedCount:
+                    type: long
+                    example: 1
+                unresolvedCount:
+                    type: long
+                    example: 1

@@ -1,5 +1,6 @@
 package br.com.reclamei.reclamation.entrypoint.api.controller;
 
+import br.com.reclamei.reclamation.entrypoint.api.dto.DashboardResponse;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationCreateRequest;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationResponse;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationUpdateRequest;
@@ -49,6 +50,12 @@ public class ReclamationController implements ReclamationsApi {
     @PostMapping("/company")
     public ResponseEntity<List<ReclamationResponse>> findAllByCompany(@RequestBody final List<ReclamationsCompanyBody> body) {
         return ResponseEntity.status(OK).body(facade.findAllByCompany(body));
+    }
+
+    @Override
+    @PostMapping("/company/dashboard")
+    public ResponseEntity<DashboardResponse> buildDashboardByCompany(@RequestBody final List<ReclamationsCompanyBody> body) {
+        return ResponseEntity.status(OK).body(facade.buildDashboardByCompany(body));
     }
 
     @Override
