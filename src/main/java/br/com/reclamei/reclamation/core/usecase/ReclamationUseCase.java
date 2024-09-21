@@ -2,6 +2,7 @@ package br.com.reclamei.reclamation.core.usecase;
 
 import br.com.reclamei.reclamation.core.domain.DashboardDomain;
 import br.com.reclamei.reclamation.core.domain.HeatmapDataDomain;
+import br.com.reclamei.reclamation.core.domain.MainProblemsDomain;
 import br.com.reclamei.reclamation.core.domain.ReclamationDomain;
 import br.com.reclamei.reclamation.core.domain.ReportsDomain;
 import br.com.reclamei.reclamation.core.gateway.CompanyGateway;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static br.com.reclamei.reclamation.core.type.ReclamationStatusType.IN_ANALYSIS;
 import static br.com.reclamei.reclamation.core.type.ReclamationStatusType.OPEN;
@@ -79,10 +81,31 @@ public record ReclamationUseCase(ReclamationGateway gateway, CompanyGateway comp
 
     public ReportsDomain buildReportsByCompany(final Map<Long, List<Long>> companyFilterDomains) {
         log.info("[ReclamationUseCase] :: buildReportsByCompany :: Building report by company");
-        final var reclamations = getReclamations(false, companyFilterDomains);
+        final var reclamations = getReclamations(false, companyFilterDomains)
+                .stream()
+                .map(this::fillServiceProperties)
+                .toList();
+
         final var heatmapData = reclamations.stream()
                 .map(item -> new HeatmapDataDomain(item.getLocalization().getLatitude(), item.getLocalization().getLongitude()))
                 .toList();
-        return new ReportsDomain(heatmapData);
+
+        final var mainProblems = reclamations.stream()
+                .collect(Collectors.groupingBy(ReclamationDomain::getServiceSubtypeName, Collectors.counting()))
+                .entrySet()
+                .stream()
+                .map(entry -> new MainProblemsDomain(entry.getKey(), entry.getValue().intValue()))
+                .sorted((d1, d2) -> Long.compare(d2.value(), d1.value()))
+                .toList();
+
+        final var mainCitiesProblems = reclamations.stream()
+                .collect(Collectors.groupingBy(item -> item.getLocalization().getCity(), Collectors.counting()))
+                .entrySet()
+                .stream()
+                .map(entry -> new MainProblemsDomain(entry.getKey(), entry.getValue().intValue()))
+                .sorted((d1, d2) -> Long.compare(d2.value(), d1.value()))
+                .toList();
+
+        return new ReportsDomain(heatmapData, mainProblems, mainCitiesProblems);
     }
 }
