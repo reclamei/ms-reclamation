@@ -8,6 +8,8 @@ import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationCreateRequest;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationResponse;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationUpdateRequest;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationsCompanyBody;
+import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationsReportsBody;
+import br.com.reclamei.reclamation.entrypoint.api.dto.ReportsResponse;
 import br.com.reclamei.reclamation.entrypoint.api.mapper.CompanyFilterMapper;
 import br.com.reclamei.reclamation.entrypoint.api.mapper.ReclamationApiMapper;
 import org.springframework.stereotype.Component;
@@ -17,7 +19,7 @@ import java.util.List;
 @Component
 public record ReclamationFacade(ReclamationApiMapper mapper, CompanyFilterMapper companyMapper, ReclamationUseCase useCase) {
 
-    public void create(ReclamationCreateRequest request) {
+    public void create(final ReclamationCreateRequest request) {
         var domain = mapper.toDomain(request);
         useCase.save(domain);
     }
@@ -27,29 +29,30 @@ public record ReclamationFacade(ReclamationApiMapper mapper, CompanyFilterMapper
         useCase.save(domain);
     }
 
-    public void updateStatus(Long id, String status) {
+    public void updateStatus(final Long id, final String status) {
         useCase.updateStatus(id, ReclamationStatusType.getByName(status));
     }
 
-    public List<ReclamationResponse> findByCompany(Long serviceSubtypeId, Long locationId) {
-        return mapper.toResponse(useCase.findByCompany(serviceSubtypeId, locationId));
-    }
-
-    public List<ReclamationResponse> findByCitizen(Long citizenId) {
+    public List<ReclamationResponse> findByCitizen(final Long citizenId) {
         return mapper.toResponse(useCase.findByCitizen(citizenId));
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(final Long id) {
         useCase.deleteById(id);
     }
 
-    public List<ReclamationResponse> findAllByCompany(List<ReclamationsCompanyBody> request) {
+    public List<ReclamationResponse> findAllByCompany(final List<ReclamationsCompanyBody> request) {
         var domain = companyMapper.toDomain(request);
         return mapper.toResponse(useCase.findAllByCompany(domain));
     }
 
-    public DashboardResponse buildDashboardByCompany(CompanyDashboardBody request) {
+    public DashboardResponse buildDashboardByCompany(final CompanyDashboardBody request) {
         var domain = companyMapper.toDomain(request.getCoverages());
         return mapper.toResponse(useCase.buildDashboardByCompany(request.isIsAdmin(), domain));
+    }
+
+    public ReportsResponse buildReportsByCompany(final ReclamationsReportsBody request) {
+        var domain = companyMapper.toDomain(request.getCoverages());
+        return mapper.toResponse(useCase.buildReportsByCompany(domain));
     }
 }

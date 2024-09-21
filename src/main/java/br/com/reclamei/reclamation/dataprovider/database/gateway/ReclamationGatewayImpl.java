@@ -38,12 +38,6 @@ public class ReclamationGatewayImpl implements ReclamationGateway {
     }
 
     @Override
-    public List<ReclamationDomain> findByCompany(final Long serviceSubtypeId, final Long locationId) {
-        var entities = repository.findByServiceSubtypeIdAndLocalizationLocationId(serviceSubtypeId, locationId);
-        return mapper.toDomain(entities);
-    }
-
-    @Override
     public List<ReclamationDomain> findByCitizen(final Long citizenId) {
         var entities = repository.findByCitizenId(citizenId);
         return mapper.toDomain(entities);

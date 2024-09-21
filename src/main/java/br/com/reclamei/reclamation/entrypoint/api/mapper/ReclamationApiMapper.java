@@ -2,10 +2,12 @@ package br.com.reclamei.reclamation.entrypoint.api.mapper;
 
 import br.com.reclamei.reclamation.core.domain.DashboardDomain;
 import br.com.reclamei.reclamation.core.domain.ReclamationDomain;
+import br.com.reclamei.reclamation.core.domain.ReportsDomain;
 import br.com.reclamei.reclamation.entrypoint.api.dto.DashboardResponse;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationCreateRequest;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationResponse;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationUpdateRequest;
+import br.com.reclamei.reclamation.entrypoint.api.dto.ReportsResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -26,5 +28,7 @@ public interface ReclamationApiMapper {
     List<ReclamationResponse> toResponse(List<ReclamationDomain> domain);
 
     DashboardResponse toResponse(DashboardDomain domain);
+
+    ReportsResponse toResponse(ReportsDomain domain);
 
 }

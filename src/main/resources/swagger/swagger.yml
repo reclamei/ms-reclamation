@@ -51,33 +51,6 @@ paths:
                     description: Reclamation was successfully deleted
                 '404':
                     description: Reclamation was not found
-    /reclamations/service-subtype/{serviceSubtypeId}/location/{locationId}:
-        get:
-            tags:
-                - reclamations
-            operationId: findByCompany
-            parameters:
-                -   name: serviceSubtypeId
-                    in: path
-                    required: true
-                    schema:
-                        type: long
-                -   name: locationId
-                    in: path
-                    required: true
-                    schema:
-                        type: long
-            responses:
-                '200':
-                    description: Reclamation was found
-                    content:
-                        application/json:
-                            schema:
-                                type: array
-                                items:
-                                    "$ref": "#/components/schemas/ReclamationResponse"
-                '404':
-                    description: Reclamation was not found
     /reclamations/company:
         post:
             tags:
@@ -140,6 +113,37 @@ paths:
                         application/json:
                             schema:
                                 "$ref": "#/components/schemas/DashboardResponse"
+                '404':
+                    description: Reclamation was not found
+    /reclamations/reports:
+        post:
+            tags:
+                - reclamations
+            operationId: buildReportsByCompany
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                coverages:
+                                    type: array
+                                    items:
+                                        type: object
+                                        properties:
+                                            serviceSubtypeId:
+                                                type: long
+                                            locations:
+                                                type: array
+                                                items:
+                                                    type: long
+            responses:
+                '200':
+                    description: Reclamation was found
+                    content:
+                        application/json:
+                            schema:
+                                "$ref": "#/components/schemas/ReportsResponse"
                 '404':
                     description: Reclamation was not found
     /reclamations/citizen/{citizenId}:
@@ -501,3 +505,15 @@ components:
                 unresolvedCount:
                     type: long
                     example: 1
+
+        ReportsResponse:
+            properties:
+                heatmapData:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                            latitude:
+                                type: string
+                            longitude:
+                                type: string

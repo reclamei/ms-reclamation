@@ -12,8 +12,6 @@ public interface ReclamationGateway {
 
     void updateStatus(Long id, ReclamationStatusType status);
 
-    List<ReclamationDomain> findByCompany(Long serviceSubtypeId, Long locationId);
-
     List<ReclamationDomain> findByCitizen(Long citizenId);
 
     void deleteById(Long id);
