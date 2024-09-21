@@ -19,7 +19,5 @@ public interface ReclamationRepository extends JpaRepository<ReclamationEntity, 
 
     List<ReclamationEntity> findByCitizenId(Long citizenId);
 
-    List<ReclamationEntity> findByServiceSubtypeIdAndLocalizationLocationId(Long serviceTypeId, Long locationId);
-
     List<ReclamationEntity> findByServiceSubtypeIdIn(Set<Long> serviceTypeIds);
 }

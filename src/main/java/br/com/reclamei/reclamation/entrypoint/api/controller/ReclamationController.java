@@ -6,6 +6,8 @@ import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationCreateRequest;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationResponse;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationUpdateRequest;
 import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationsCompanyBody;
+import br.com.reclamei.reclamation.entrypoint.api.dto.ReclamationsReportsBody;
+import br.com.reclamei.reclamation.entrypoint.api.dto.ReportsResponse;
 import br.com.reclamei.reclamation.entrypoint.api.facade.ReclamationFacade;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -60,15 +62,15 @@ public class ReclamationController implements ReclamationsApi {
     }
 
     @Override
-    @GetMapping("/citizen/{citizenId}")
-    public ResponseEntity<List<ReclamationResponse>> findByCitizen(@PathVariable final Long citizenId) {
-        return ResponseEntity.status(OK).body(facade.findByCitizen(citizenId));
+    @PostMapping("/company/reports")
+    public ResponseEntity<ReportsResponse> buildReportsByCompany(@RequestBody final ReclamationsReportsBody body) {
+        return ResponseEntity.status(OK).body(facade.buildReportsByCompany(body));
     }
 
     @Override
-    @GetMapping("/service-subtype/{serviceSubtypeId}/location/{locationId}")
-    public ResponseEntity<List<ReclamationResponse>> findByCompany(@PathVariable final Long serviceSubtypeId, @PathVariable final Long locationId) {
-        return ResponseEntity.status(OK).body(facade.findByCompany(serviceSubtypeId, locationId));
+    @GetMapping("/citizen/{citizenId}")
+    public ResponseEntity<List<ReclamationResponse>> findByCitizen(@PathVariable final Long citizenId) {
+        return ResponseEntity.status(OK).body(facade.findByCitizen(citizenId));
     }
 
     @Override
