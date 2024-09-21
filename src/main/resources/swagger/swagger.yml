@@ -517,3 +517,21 @@ components:
                                 type: string
                             longitude:
                                 type: string
+                mainProblems:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                            description:
+                                type: string
+                            value:
+                                type: integer
+                mainCitiesProblems:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                            description:
+                                type: string
+                            value:
+                                type: integer

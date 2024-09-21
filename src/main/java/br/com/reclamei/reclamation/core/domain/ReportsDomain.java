@@ -3,6 +3,8 @@ package br.com.reclamei.reclamation.core.domain;
 import java.util.List;
 
 public record ReportsDomain(
-        List<HeatmapDataDomain> heatmapData
+        List<HeatmapDataDomain> heatmapData,
+        List<MainProblemsDomain> mainProblems,
+        List<MainProblemsDomain> mainCitiesProblems
 ) {
 }
