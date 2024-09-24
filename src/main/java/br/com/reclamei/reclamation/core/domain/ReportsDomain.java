@@ -5,6 +5,7 @@ import java.util.List;
 public record ReportsDomain(
         List<HeatmapDataDomain> heatmapData,
         List<MainProblemsDomain> mainProblems,
-        List<MainProblemsDomain> mainCitiesProblems
+        List<MainProblemsDomain> mainCitiesProblems,
+        List<ResponseTimeGraphDomain> responseTimeGraph
 ) {
 }

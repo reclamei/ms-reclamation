@@ -535,3 +535,16 @@ components:
                                 type: string
                             value:
                                 type: integer
+                responseTimeGraph:
+                    type: array
+                    items:
+                        type: object
+                        properties:
+                            day:
+                                type: string
+                                format: date
+                            averageResponseTime:
+                                type: number
+                                format: float
+                            quantityAnswered:
+                                type: number
