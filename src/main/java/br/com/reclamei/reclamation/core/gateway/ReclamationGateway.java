@@ -19,4 +19,6 @@ public interface ReclamationGateway {
     List<ReclamationDomain> findAllByCompany(Map<Long, List<Long>> companyFilterDomains);
 
     List<ReclamationDomain> findAll();
+
+    ReclamationDomain getById(Long id);
 }

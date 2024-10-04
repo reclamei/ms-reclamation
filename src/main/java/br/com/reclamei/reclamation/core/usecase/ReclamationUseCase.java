@@ -110,4 +110,8 @@ public record ReclamationUseCase(ReclamationGateway gateway, CompanyGateway comp
                 .toList();
     }
 
+    public ReclamationDomain getById(final Long id) {
+        log.info("[ReclamationUseCase] :: getById :: Finding company by id {}", id);
+        return gateway.getById(id);
+    }
 }

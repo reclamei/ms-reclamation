@@ -55,4 +55,8 @@ public record ReclamationFacade(ReclamationApiMapper mapper, CompanyFilterMapper
         var domain = companyMapper.toDomain(request.getCoverages());
         return mapper.toResponse(useCase.buildReportsByCompany(domain));
     }
+
+    public ReclamationResponse getById(final Long id) {
+        return mapper.toResponse(useCase.getById(id));
+    }
 }

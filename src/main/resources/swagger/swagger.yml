@@ -51,6 +51,25 @@ paths:
                     description: Reclamation was successfully deleted
                 '404':
                     description: Reclamation was not found
+        get:
+            tags:
+                - reclamations
+            operationId: getById
+            parameters:
+                -   name: id
+                    in: path
+                    required: true
+                    schema:
+                        type: long
+            responses:
+                '200':
+                    description: Reclamation was found
+                    content:
+                        application/json:
+                            schema:
+                                "$ref": "#/components/schemas/ReclamationResponse"
+                '404':
+                    description: Reclamation was not found
     /reclamations/company:
         post:
             tags:
