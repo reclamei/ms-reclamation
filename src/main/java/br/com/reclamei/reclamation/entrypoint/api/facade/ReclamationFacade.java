@@ -21,12 +21,12 @@ public record ReclamationFacade(ReclamationApiMapper mapper, CompanyFilterMapper
 
     public void create(final ReclamationCreateRequest request) {
         var domain = mapper.toDomain(request);
-        useCase.save(domain);
+        useCase.create(domain);
     }
 
     public void update(final ReclamationUpdateRequest request) {
         var domain = mapper.toDomain(request);
-        useCase.save(domain);
+        useCase.update(domain);
     }
 
     public void updateStatus(final Long id, final String status) {

@@ -14,13 +14,10 @@ import java.util.List;
 public interface ResponseApiMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(source = "reclamationId", target = "reclamation.id")
     ResponseDomain toDomain(ResponseCreateRequest request);
 
-    @Mapping(source = "reclamation.id", target = "reclamationId")
     ResponseResponse toResponse(ResponseDomain domain);
 
-    @Mapping(source = "reclamationId", target = "reclamation.id")
     ResponseDomain toDomain(ResponseUpdateRequest request);
 
     List<ResponseResponse> toResponse(List<ResponseDomain> domain);

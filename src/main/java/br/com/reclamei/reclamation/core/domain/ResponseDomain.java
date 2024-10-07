@@ -15,7 +15,7 @@ public class ResponseDomain {
 
     private LocalDateTime createdAt;
 
-    private ReclamationDomain reclamation;
+    private Long reclamationId;
 
     private EvaluationDomain evaluation;
 

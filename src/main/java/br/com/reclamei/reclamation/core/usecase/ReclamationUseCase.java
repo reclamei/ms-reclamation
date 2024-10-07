@@ -8,8 +8,10 @@ import br.com.reclamei.reclamation.core.domain.ReportsDomain;
 import br.com.reclamei.reclamation.core.domain.ResponseTimeGraphDomain;
 import br.com.reclamei.reclamation.core.gateway.CompanyGateway;
 import br.com.reclamei.reclamation.core.gateway.ReclamationGateway;
+import br.com.reclamei.reclamation.core.gateway.ResponseGateway;
 import br.com.reclamei.reclamation.core.type.ReclamationStatusType;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -23,10 +25,27 @@ import static br.com.reclamei.reclamation.core.type.ReclamationStatusType.RESOLV
 import static br.com.reclamei.reclamation.core.type.ReclamationStatusType.UNIDENTIFIED;
 
 @Slf4j
-public record ReclamationUseCase(ReclamationGateway gateway, CompanyGateway companyGateway) {
+public class ReclamationUseCase {
 
-    public void save(final ReclamationDomain domain) {
+    private final ReclamationGateway gateway;
+    private final CompanyGateway companyGateway;
+    private final ResponseGateway responseGateway;
+
+    public ReclamationUseCase(ReclamationGateway gateway, CompanyGateway companyGateway, ResponseGateway responseGateway) {
+        this.gateway = gateway;
+        this.companyGateway = companyGateway;
+        this.responseGateway = responseGateway;
+    }
+
+    public void create(final ReclamationDomain domain) {
         log.info("[ReclamationUseCase] :: create :: Creating new reclamation. {}", domain);
+        gateway.save(domain);
+    }
+
+    @Transactional
+    public void update(final ReclamationDomain domain) {
+        log.info("[ReclamationUseCase] :: update :: Updating reclamation with id: {}", domain.getId());
+        this.responseGateway.save(domain.getResponse());
         gateway.save(domain);
     }
 

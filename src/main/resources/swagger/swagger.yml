@@ -343,7 +343,6 @@ components:
                 - citizenId
                 - serviceSubtypeId
                 - description
-                - photo
             type: object
             properties:
                 id:
@@ -360,6 +359,23 @@ components:
                 photo:
                     type: string
                     example: Harry Potter Description
+                analyzedAt:
+                    type: string
+                    format: date-time
+                    example: Harry Potter Description
+                status:
+                    type: string
+                    enum:
+                        - OPEN
+                        - REJECTED
+                        - IN_ANALYSIS
+                        - UNIDENTIFIED
+                        - NO_FORECAST
+                        - FORECAST
+                        - RESOLVED
+                response:
+                    type: object
+                    $ref: "#/components/schemas/ResponseUpdateRequest"
                 localization:
                     type: object
                     properties:
@@ -436,6 +452,9 @@ components:
                             type: string
                         longitude:
                             type: string
+                response:
+                    type: object
+                    $ref: "#/components/schemas/ResponseUpdateRequest"
 
         ResponseCreateRequest:
             required:
@@ -451,7 +470,6 @@ components:
                     example: Harry Potter Description
         ResponseUpdateRequest:
             required:
-                - id
                 - reclamationId
                 - description
             type: object
