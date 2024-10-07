@@ -66,4 +66,11 @@ public class ReclamationGatewayImpl implements ReclamationGateway {
         return mapper.toDomain(repository.findAll());
     }
 
+    @Override
+    public ReclamationDomain getById(final Long id) {
+        var entity = repository.findById(id)
+            .orElseThrow(() -> new NotFoundException(format("[ReclamationGatewayImpl] :: getById :: Reclamation with id %s not found", id)));
+        return mapper.toDomain(entity);
+    }
+
 }

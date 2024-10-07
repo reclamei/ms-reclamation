@@ -74,6 +74,12 @@ public class ReclamationController implements ReclamationsApi {
     }
 
     @Override
+    @GetMapping("/{id}")
+    public ResponseEntity<ReclamationResponse> getById(@PathVariable final Long id) {
+        return ResponseEntity.status(OK).body(facade.getById(id));
+    }
+
+    @Override
     @PutMapping
     public ResponseEntity<Void> update(@Valid @RequestBody final ReclamationUpdateRequest body) {
         facade.update(body);

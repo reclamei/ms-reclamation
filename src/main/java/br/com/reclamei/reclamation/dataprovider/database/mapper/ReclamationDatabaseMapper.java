@@ -9,7 +9,8 @@ import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = LocalizationDatabaseMapper.class)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        uses = {LocalizationDatabaseMapper.class, ResponseDatabaseMapper.class})
 public interface ReclamationDatabaseMapper {
 
     ReclamationDomain toDomain(ReclamationEntity entity);
@@ -19,7 +20,15 @@ public interface ReclamationDatabaseMapper {
     List<ReclamationDomain> toDomain(List<ReclamationEntity> entity);
 
     @AfterMapping
-    default void atualizarObjeto(@MappingTarget ReclamationEntity entity) {
+    default void afterMapping(@MappingTarget ReclamationEntity entity) {
         entity.getLocalization().setReclamation(entity);
     }
+
+    @AfterMapping
+    default void afterMapping(@MappingTarget ReclamationDomain domain) {
+        if (domain.getResponses() != null && !domain.getResponses().isEmpty()) {
+            domain.setResponse(domain.getResponses().get(0));
+        }
+    }
+
 }

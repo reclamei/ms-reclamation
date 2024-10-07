@@ -59,7 +59,7 @@ public class ReclamationEntity implements Serializable {
     @OneToOne(mappedBy = "reclamation", cascade = CascadeType.ALL, orphanRemoval = true)
     private LocalizationEntity localization;
 
-    @OneToMany(mappedBy = "reclamation", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "reclamation", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<ResponseEntity> responses;
 
 }
